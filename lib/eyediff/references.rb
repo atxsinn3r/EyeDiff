@@ -60,7 +60,7 @@ module EyeDiff
     end
 
     def self.add_notes(ref_name, notes)
-      path = File.join(REFDIR, ref_name, Eyediff::References::NOTESNAME)
+      path = File.expand_path(File.join(REFDIR, ref_name, EyeDiff::References::NOTESNAME))
 
       EyeDiff::Logger.log("Adding notes for #{ref_name}")
       File.open(path, 'wb') do |f|
