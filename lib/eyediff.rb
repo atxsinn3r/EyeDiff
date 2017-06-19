@@ -1,0 +1,8 @@
+require 'eyediff/env'
+require 'eyediff/logger'
+require 'eyediff/references'
+require 'eyediff/cache'
+require 'eyediff/report'
+require 'eyediff/differ'
+require 'eyediff/thread_pool'
+require 'eyediff/security'

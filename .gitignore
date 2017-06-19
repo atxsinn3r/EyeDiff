@@ -1,0 +1,6 @@
+.Gemfile.local
+.Gemfile.local.lock
+doc/
+report/data.json
+report/images/*
+.cache

@@ -1,0 +1,30 @@
+VMWare ESXi, formerly known as ESX, is an enterprise-class, type-1 hypervisor developed by VMWare
+for deploying and serving virtual computers.
+
+After version 4.1 (released in 2010), VMWare renamed ESX to ESXi. ESXi replaces Service Console
+with a more closely integrated OS.
+
+Login:
+
+You might find a login portal on port 443, which can be brute-forced by this Metasploit Framework
+module:
+
+* auxiliary/scanner/vmware/vmware_http_login
+
+If vCenter is available (try port 5480), it might be a default username and password:
+
+* root:vmware
+* root:123456
+
+Other modules:
+
+If you're lucky, this directory traversal module might also work for you against the target:
+
+* auxiliary/scanner/vmware/vmware_server_dir_trav
+
+Other useful Metasploit Framework modules that you could use:
+
+* auxiliary/scanner/vmware/esx_fingerprint
+* auxiliary/scanner/vmware/vmware_enum_permissions
+* auxiliary/scanner/vmware/vmware_enum_users
+* auxiliary/scanner/vmware/vmware_enum_vms

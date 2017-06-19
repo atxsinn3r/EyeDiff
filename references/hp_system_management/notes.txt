@@ -1,0 +1,12 @@
+HPE System Management Homepage is a web-based interface that consolidates and simplifies the
+management of ProLiant and Integrity servers.
+
+You can probably use the following brute-force module for the login portal:
+
+* auxiliary/scanner/http/hp_sys_mgmt_login
+
+Exploits that might work:
+
+* exploits/linux/http/hp_system_management
+* exploits/linux/local/hp_smhstart
+* exploits/multi/http/hp_sys_mgmt_exec

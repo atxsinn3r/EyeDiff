@@ -1,0 +1,53 @@
+Apache Tomcat, also known as Tomcat Server, is an open-source Java Servlet Container developed by
+the Apache Software Foundation. Tomcat implements several Java EE specifications including Java
+Servlet, JavaServer Pages (JSP), Java EL, and WebSocket, and provides a "pure Java" HTTP web
+server environment in which Java code can run.
+
+Apache Tomcat Passwords:
+
+Apache Tomcat is often a valuable target for penetration testing, because if you manage to find
+the administrator's password, you can upload a malicious war file from tomcat, and gain
+arbitrary remote code execution.
+
+Older versions of Tomcats came with default passwords, for example:
+
+tomcat:tomcat as tomcat
+role1:tomcat as role1
+both:tomcat as tomcat and role1
+
+Newer versions of Tomcats require the admin to set a password in order to use it. If you are up
+against this type of Tomcat, then you may consider using a brute-force module, such as the
+following module from Metasploit:
+
+* auxiliary/scanner/http/tomcat_mgr_login
+
+Apache Tomcat Exploits:
+
+The Metasploit Framework currently contains two useful exploit modules against Tomcat:
+
+* exploit/multi/http/tomcat_mgr_deploy
+* exploit/multi/http/tomcat_mgr_upload
+
+Other Metasploit modules that exploit applications that run on top of Tomcat, if you can find them:
+
+* exploit/multi/http/struts2_content_type_ognl
+* exploit/multi/http/struts_code_exec
+* exploit/multi/http/struts_code_exec_classloader
+* exploit/multi/http/struts_code_exec_exception_delegator
+* exploit/multi/http/struts_code_exec_parameters
+* exploit/multi/http/struts_default_action_mapper
+* exploit/multi/http/struts_dev_mode
+* exploit/multi/http/struts_dmi_exec
+* exploit/multi/http/struts_dmi_rest_exec
+* exploit/multi/http/struts_include_params
+* exploit/multi/http/struts_dev_mode
+* exploit/multi/http/axis2_deployer
+* exploit/multi/http/apache_roller_ognl_injection
+
+
+Apache Tomcat Post-Exploitation:
+
+The following Metasploit module can be used to collect Tomcat credentials:
+
+* post/multi/gather/tomcat_gather
+
