@@ -21,7 +21,7 @@ class GenerateDiff
     name2 = ARGV.shift
     image1 = ChunkyPNG::Image.from_file(name1)
     image2 = ChunkyPNG::Image.from_file(name2)
-    diff = EyeDiff::Differ.new(image1, image2)
+    diff = EyeDiff::Differ::Pixel.new(image1, image2)
     diff_image = diff.generate_diff
     diff_image.save('diff.png')
     EyeDiff::Logger.log('Saved as diff.png')

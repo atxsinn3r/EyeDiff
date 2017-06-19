@@ -49,6 +49,8 @@ class IdImage
         EyeDiff::Logger.log("#{File.basename(options[:image_path])} is #{name}!")
         EyeDiff::Report.print_notes(name)
         return
+      else
+        EyeDiff::Logger.log('No match found.')
       end
     ensure
       @cache.close
