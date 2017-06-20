@@ -14,6 +14,7 @@ Older versions of Tomcats came with default passwords, for example:
 tomcat:tomcat as tomcat
 role1:tomcat as role1
 both:tomcat as tomcat and role1
+admin:admin as manager
 
 Newer versions of Tomcats require the admin to set a password in order to use it. If you are up
 against this type of Tomcat, then you may consider using a brute-force module, such as the
