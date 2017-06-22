@@ -1,5 +1,8 @@
 # EyeDiff
 
+Please Note: This is currently a proof-of-concept, and is still being worked on.
+
+
 ## Description
 
 Originally this was designed to allow our pentesters to be able to go through EyeWitness
