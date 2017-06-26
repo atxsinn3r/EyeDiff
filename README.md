@@ -1,15 +1,13 @@
 # EyeDiff
 
-Please Note: This is currently a proof-of-concept, and is still being worked on.
-
-
 ## Description
 
 Originally this was designed to allow our pentesters to be able to go through EyeWitness
-results automatically, and more quickly identify important targets.
+results, and identify important targets automatically.
 
-Once the important targets are identified, these pentesters can use shared notes to help
-them engage these remote machines, which make them more productive.
+Once the important targets have been identified, the pentesters can use shared notes to help
+them engage these remote machines. Ideally, notes may allow these people to perform on a
+similar quality level, and hopefully more productive.
 
 If you don't know what EyeWitness is, see:
 https://github.com/ChrisTruncer/EyeWitness
@@ -22,8 +20,6 @@ Note: EyeWitness can only be run on Kali as of now.
               You can also use this tool to add more references and notes.
 * server.rb - The server allows you to look up an image by using the client.rb tool.
 * id_image.rb - This allows you to look up an image from your own local database.
-* generate_diff.rb - This will generate a diff image between two images.
-* resize_image.rb - This allows you to resize an image.
 * view_report.rb - This is the report interface for client.rb
 
 
@@ -38,6 +34,6 @@ $ bundle install
 ## Typical Usage
 
 1. Start the server
-2. Start view_report, this will spawn a browser to monitor the image diffing report
-3. Run client.rb
+2. Start view_report, this will spawn a browser to monitor the EyeDiff report
+3. Run client.rb (see --help for more information)
 4. Look at the image report.
