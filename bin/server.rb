@@ -99,6 +99,8 @@ class EyeDiffServer
           Helper::Output.print_error(e.message)
           return false
         end
+
+        sleep(5)
       end
 
       nil

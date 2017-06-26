@@ -12,7 +12,7 @@ class EyeDiffClient
 
   class Error < ::RuntimeError; end
 
-  POOLSIZE = 5
+  POOLSIZE = 3
 
   attr_accessor :server
 
