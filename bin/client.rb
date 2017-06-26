@@ -50,6 +50,8 @@ class EyeDiffClient
             end
           end
         end
+
+        sleep(0.1)
       end
     ensure
       pool.shutdown
@@ -66,7 +68,8 @@ class EyeDiffClient
   end
 
   def add_exception(md5)
-    server.call('diff.exception', md5)
+    results = server.call('diff.exception', md5)
+    Helper::Output.print_status(results['message'])
   end
 
   def add_reference(dir)

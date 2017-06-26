@@ -38,10 +38,10 @@ class EyeDiffServer
       msg = ''
 
       if @cache.is_md5_in_blacklist?(md5)
+        msg = "#{md5} already in blacklist"
+      else
         @cache.add_md5_to_blacklist(md5)
         msg = "#{md5} added to blacklist"
-      else
-        msg = "#{md5} already in blacklist"
       end
 
       Helper::Output.print_status(msg)
