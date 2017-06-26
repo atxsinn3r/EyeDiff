@@ -2,6 +2,8 @@
 
 ## Description
 
+EyeDiff is an **experimental** tool to diff screenshots.
+
 Originally this was designed to allow our pentesters to be able to go through EyeWitness
 results, and identify important targets automatically.
 
