@@ -11,8 +11,9 @@ class EyeDiffServer
   PORT = 3000
 
   class HandlerNames
-    IDENTIFY = 'diff.identify'
-    ADDREF   = 'diff.addreference'
+    IDENTIFY  = 'diff.identify'
+    ADDREF    = 'diff.addreference'
+    EXCEPTION = 'diff.exception'
   end
 
   class Handlers
@@ -30,6 +31,22 @@ class EyeDiffServer
       end
 
       { message: results }
+    end
+
+    def add_exception(md5)
+      Helper::Output.print_status("Adding #{md5} to blacklist")
+      msg = ''
+
+      if @cache.is_md5_in_blacklist?(md5)
+        @cache.add_md5_to_blacklist(md5)
+        msg = "#{md5} added to blacklist"
+      else
+        msg = "#{md5} already in blacklist"
+      end
+
+      Helper::Output.print_status(msg)
+
+      { message: msg }
     end
 
     def add_reference(args)
@@ -120,6 +137,7 @@ class EyeDiffServer
       server = XMLRPC::Server.new(PORT)
       server.add_handler(EyeDiffServer::HandlerNames::IDENTIFY) { |encoded_data| h.identify(encoded_data) }
       server.add_handler(EyeDiffServer::HandlerNames::ADDREF) { |*args| h.add_reference(args) }
+      server.add_handler(EyeDiffServer::HandlerNames::EXCEPTION) { |md5| h.add_exception(md5) }
       server.set_default_handler { |name, *args| raise XMLRPC::FaultException.new(-99, 'Error') }
       server.serve
     ensure

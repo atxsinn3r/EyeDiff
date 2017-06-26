@@ -65,6 +65,10 @@ class EyeDiffClient
     fnames
   end
 
+  def add_exception(md5)
+    server.call('diff.exception', md5)
+  end
+
   def add_reference(dir)
     raise EyeDiffClient::Error, "Directory #{dir} not found." unless Dir.exists?(dir)
 
@@ -109,6 +113,11 @@ class EyeDiffClient
         inputs[:arg] = v
       end
 
+      opt.on('-e', '--except <String>', 'MD5 Hash of the image you wish to add to the black list') do |v|
+        inputs[:action] = :except
+        inputs[:arg] = v
+      end
+
       opt.on_tail('--help', 'Show this message') do
         puts opt
         exit
@@ -137,6 +146,8 @@ class EyeDiffClient
       end
     when :add
       cli.add_reference(inputs[:arg])
+    when :except
+      cli.add_exception(inputs[:arg])
     end
   end
 

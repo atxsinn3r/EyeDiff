@@ -13,8 +13,16 @@ module EyeDiff
       File.expand_path(File.join(base, '..', '.blacklist'))
     end
 
-    def self.json_location
-      File.expand_path(File.join(base, '..', 'report', 'data.json'))
+    def self.report_image_location
+      File.expand_path(File.join(base, '..', 'report', 'images'))
+    end
+
+    def self.image_json_location
+      File.expand_path(File.join(base, '..', 'report', 'image_data.json'))
+    end
+
+    def self.notes_json_location
+      File.expand_path(File.join(base, '..', 'report', 'notes_data.json'))
     end
 
     def self.default_acceptable_pixel_difference

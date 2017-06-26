@@ -1,5 +1,5 @@
 function showNotes(imageName) {
-	$.getJSON('data.json', function(json) {
+	$.getJSON('notes_data.json', function(json) {
 		$(".notes")[0].innerText = json[imageName];
 	});
 	$(".notes-frame")[0].style.display = "inline";
@@ -11,9 +11,9 @@ function closeNotes() {
 
 var lastKnownIndex = -1;
 
-function loadContent() {
+function loadTargets() {
 	var lastImageName;
-	$.getJSON('data.json', function(json) {
+	$.getJSON('image_data.json', function(json) {
 		for (var imageName in json) {
 			lastImageName = imageName;
 			if (Object.keys(json).indexOf(lastImageName) <= lastKnownIndex) {
@@ -24,7 +24,7 @@ function loadContent() {
 			var img1 = document.createElement('img');
 			img1.setAttribute('src', 'images/' + imageName);
 			var p1 = document.createElement('p');
-			p1.innerText = imageName;
+			p1.innerText = imageName + " (MD5: "+ json[imageName] +")";
 			var li1 = document.createElement('li');
 			link1.appendChild(img1)
 			li1.appendChild(link1);
@@ -35,7 +35,7 @@ function loadContent() {
 			var img2 = document.createElement('img');
 			img2.setAttribute('src', 'images/' + imageName);
 			var p2 = document.createElement('p');
-			p2.innerText = imageName;
+			p2.innerText = imageName + " (MD5: "+ json[imageName] +")";
 			var li2 = document.createElement('li');
 			link2.appendChild(img2)
 			li2.appendChild(link2);
@@ -46,7 +46,7 @@ function loadContent() {
 			var img3 = document.createElement('img');
 			img3.setAttribute('src', 'images/' + imageName);
 			var p3 = document.createElement('p');
-			p3.innerText = imageName;
+			p3.innerText = imageName + " (MD5: "+ json[imageName] +")";
 			var li3 = document.createElement('li');
 			link3.appendChild(img3)
 			li3.appendChild(link3);
@@ -59,7 +59,7 @@ function loadContent() {
 
 		lastKnownIndex = Object.keys(json).indexOf(lastImageName);
 	});
-	setTimeout(loadContent, 3000);
+	setTimeout(loadTargets, 3000);
 }
 
 $(document).keyup(function(e) {
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		$(this).addClass("active");
 	});
 
-	loadContent();
+	loadTargets();
 });
 
 

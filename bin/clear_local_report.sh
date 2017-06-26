@@ -1,6 +1,6 @@
 #!/bin/bash
 
 rm ../report/images/*
-rm ../report/data.json
+rm ../report/*.json
 
 echo "Done"

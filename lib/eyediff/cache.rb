@@ -48,12 +48,20 @@ module EyeDiff
 
     def add_to_blacklist(image_data)
       md5 = Helper::Converter.to_md5(image_data)
+      add_md5_to_blacklist(md5)
+    end
+
+    def add_md5_to_blacklist(md5)
       @black_list << md5
+    end
+
+    def is_md5_in_blacklist?(md5)
+      @black_list.include?(md5)
     end
 
     def is_in_blacklist?(image_data)
       md5 = Helper::Converter.to_md5(image_data)
-      @black_list.include?(md5)
+      is_md5_in_blacklist?(md5)
     end
 
     def clear_blacklist
