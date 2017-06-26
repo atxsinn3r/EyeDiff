@@ -4,7 +4,7 @@ lib = File.expand_path(File.join(__FILE__, '..', '..','lib'))
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'eyediff'
-require 'chunky_png'
+require 'helper'
 require 'optparse'
 
 class IdImage
@@ -39,29 +39,34 @@ class IdImage
     options = get_options
     image_data = File.read(options[:image_path])
 
+    if image_data.empty?
+      Helper::OUtput.print_error('This file is empty')
+      return
+    end
+
     @cache = EyeDiff::Cache.new
 
     begin
-      EyeDiff::Logger.log("Identifying image...")
+      Helper::Output.print_status("Identifying image...")
       name = md5_match(image_data) || pixel_match(image_data)
       if name
         @cache.increase_popularity(name)
-        EyeDiff::Logger.log("#{File.basename(options[:image_path])} is #{name}!")
-        EyeDiff::Report.print_notes(name)
+        Helper::Output.print_status("#{File.basename(options[:image_path])} is #{name}!")
         return
       else
-        EyeDiff::Logger.log('No match found.')
+        Helper::Output.print_status('No match found.')
       end
     ensure
       @cache.close
     end
   end
 
-  def md5_match(image)
-    @cache.each do |name, data|
-      data[:images].each do |ref|
-        diff = EyeDiff::Differ::MD5.new(image, ref[:md5])
-        return name if diff.same?
+  def md5_match(image_data)
+    @cache.each do |ref_name, refs|
+      refs.each do |ref|
+        md5 = ref[:md5]
+        diff = EyeDiff::Differ::MD5.new(image_data, md5)
+        return ref_name if diff.same?
       end
     end
 
@@ -69,11 +74,16 @@ class IdImage
   end
 
   def pixel_match(image)
-    image = ChunkyPNG::Image.from_string(image)
-    @cache.each do |name, data|
-      data[:images].each do |ref|
-        diff = EyeDiff::Differ::Pixel.new(image, ref[:png])
-        return name if diff.same?
+    @cache.each do |ref_name, refs|
+      begin
+        refs.each do |ref|
+          ref_data = File.read(ref[:path])
+          diff = EyeDiff::Differ::Pixel.new(image, ref_data)
+          return ref_name if diff.similar?
+        end
+      rescue EyeDiff::Differ::Pixel::Error => e
+        Helper::Output.print_error(e.message)
+        break
       end
     end
 

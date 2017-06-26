@@ -34,9 +34,10 @@ class EyeDiffClient
 
   def identify_multiple(dir)
     pool = EyeDiff::ThreadPool.new(POOLSIZE)
+    images = get_images_from_dir(dir)
 
     begin
-      get_images_from_dir(dir).each do |fname|
+      images.each do |fname|
         short_name = File.basename(fname)
         pool.schedule do
           Helper::Output.print_status("Attempting to identify #{short_name}")

@@ -9,12 +9,23 @@ module EyeDiff
       File.expand_path(File.join(base, '..', '.cache'))
     end
 
+    def self.blacklist_file_location
+      File.expand_path(File.join(base, '..', '.blacklist'))
+    end
+
     def self.json_location
       File.expand_path(File.join(base, '..', 'report', 'data.json'))
     end
 
-    def self.default_acceptable_difference
-      10
+    def self.default_acceptable_pixel_difference
+      13
+    end
+
+    def self.default_acceptable_histogram_difference
+      {
+        high: 110.0,
+        low: 80.0
+      }
     end
 
     def self.base

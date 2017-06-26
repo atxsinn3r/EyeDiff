@@ -22,7 +22,12 @@ class EyeDiffServer
 
     def identify(encoded_data)
       image_data = Helper::Converter.to_binary(encoded_data)
-      results = id_image(image_data)
+
+      if image_data.empty?
+        results = ''
+      else
+        results = id_image(image_data)
+      end
 
       { message: results }
     end
@@ -43,7 +48,7 @@ class EyeDiffServer
 
       EyeDiff::References.add(name, images, notes)
       image_names = EyeDiff::References.get_image_paths(name)
-      @cache.add(name: name, image_paths: image_names)
+      @cache.add(name: name, paths: image_names)
 
       { message: 'OK' }
     end
@@ -53,11 +58,12 @@ class EyeDiffServer
       { messages: 'OK' }
     end
 
-    def md5_match(image)
-      @cache.each do |name, data|
-        data[:images].each do |ref|
-          diff = EyeDiff::Differ::MD5.new(image, ref[:md5])
-          return name if diff.same?
+    def md5_match(image_data)
+      @cache.each do |ref_name, refs|
+        refs.each do |ref|
+          md5 = ref[:md5]
+          diff = EyeDiff::Differ::MD5.new(image_data, md5)
+          return ref_name if diff.same?
         end
       end
 
@@ -65,11 +71,16 @@ class EyeDiffServer
     end
 
     def pixel_match(image)
-      image = ChunkyPNG::Image.from_string(image)
-      @cache.each do |name, data|
-        data[:images].each do |ref|
-          diff = EyeDiff::Differ::Pixel.new(image, ref[:png])
-          return name if diff.same?
+      @cache.each do |ref_name, refs|
+        begin
+          refs.each do |ref|
+            ref_data = File.read(ref[:path])
+            diff = EyeDiff::Differ::Pixel.new(image, ref_data)
+            return ref_name if diff.similar?
+          end
+        rescue EyeDiff::Differ::Pixel::Error => e
+          Helper::Output.print_error(e.message)
+          return false
         end
       end
 
@@ -77,17 +88,25 @@ class EyeDiffServer
     end
 
     def id_image(image)
-      EyeDiff::Logger.log("Identifying image...")
+      if @cache.is_in_blacklist?(image)
+        Helper::Output.print_status("Image in black list")
+        return {}
+      end
+
+      Helper::Output.print_status("Identifying image...")
 
       name = md5_match(image) || pixel_match(image)
       if name
-        EyeDiff::Logger.log("Found a match: #{name}")
+        Helper::Output.print_status("Found a match: #{name}")
         @cache.increase_popularity(name)
         notes = EyeDiff::References.get_notes(name)
         results = {}
         results[:name] = name
         results[:notes] = notes if notes
         return results
+      else
+        @cache.add_to_blacklist(image)
+        Helper::Output.print_status('Updated the blacklist')
       end
 
       {}

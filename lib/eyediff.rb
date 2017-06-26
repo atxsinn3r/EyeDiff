@@ -1,5 +1,4 @@
 require 'eyediff/env'
-require 'eyediff/logger'
 require 'eyediff/references'
 require 'eyediff/cache'
 require 'eyediff/report'

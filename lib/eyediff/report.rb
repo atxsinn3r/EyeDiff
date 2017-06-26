@@ -1,6 +1,5 @@
 require 'eyediff/env'
 require 'eyediff/references'
-require 'eyediff/logger'
 require 'json'
 require 'uri'
 require 'terminal-table'
@@ -41,7 +40,7 @@ module EyeDiff
       json[fname] = notes
       report.save_json(json.to_json)
 
-      EyeDiff::Logger.log("#{fname} saved to JSON.")
+      Helper::Output.print_status("#{fname} saved to JSON.")
     end
 
     def self.print_notes(name)
@@ -58,7 +57,7 @@ module EyeDiff
       end
 
       table = Terminal::Table.new(rows: rows)
-      EyeDiff::Logger.log('Popularity Table:')
+      Helper::Output.print_status('Popularity Table:')
       puts table
     end
   end

@@ -1,6 +1,7 @@
 require 'base64'
 require 'zlib'
 require 'uri'
+require 'digest'
 
 module Helper
   class Converter
@@ -30,6 +31,14 @@ module Helper
 
     def self.to_binary(data)
       decompress(base64_decode(data))
+    end
+
+    def self.file_to_md5(path)
+      Digest::MD5.hexdigest(File.read(path))
+    end
+
+    def self.to_md5(data)
+      Digest::MD5.hexdigest(data)
     end
 
     def self.normalize_uri_filename(val)

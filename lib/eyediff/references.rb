@@ -1,12 +1,18 @@
 require 'eyediff/env'
-require 'eyediff/logger'
-require 'chunky_png'
+require 'helper'
 
 module EyeDiff
   class References
 
     REFDIR    = Env.reference_directory
     NOTESNAME = 'notes.txt'
+
+    def self.each
+      get_names.each do |name|
+        paths = get_image_paths(name)
+        yield name, paths
+      end
+    end
 
     def self.get_notes(name)
       dir = File.join(REFDIR, name)
@@ -22,7 +28,7 @@ module EyeDiff
       image_paths = []
       dir = File.join(REFDIR, name)
       return image_paths unless Dir.exists?(dir)
-      Dir.entries(dir).keep_if { |e| e !~ /^\./ && e !~ /^notes\.txt$/i }.map { |fname| File.join(name, fname)}
+      Dir.entries(dir).keep_if { |e| e !~ /^\./ && e !~ /^notes\.txt$/i }.map { |fname| File.join(REFDIR, name, fname)}
     end
 
     def self.get_names
@@ -35,7 +41,7 @@ module EyeDiff
 
       unless Dir.exists?(folder_path)
         Dir.mkdir(folder_path)
-        EyeDiff::Logger.log("Reference directory added: #{name}")
+        Helper::Output.print_status("Reference directory added: #{name}")
       end
 
       add_image(name, images)
@@ -51,7 +57,7 @@ module EyeDiff
         fname = File.basename(image[:fname])
         data  = image[:data]
         File.open(File.join(folder_path, fname), 'wb') do |f|
-          EyeDiff::Logger.log("Adding reference #{fname} for #{ref_name}")
+          Helper::Output.print_status("Adding reference #{fname} for #{ref_name}")
           f.write(data)
         end
       end
@@ -62,7 +68,7 @@ module EyeDiff
     def self.add_notes(ref_name, notes)
       path = File.expand_path(File.join(REFDIR, ref_name, EyeDiff::References::NOTESNAME))
 
-      EyeDiff::Logger.log("Adding notes for #{ref_name}")
+      Helper::Output.print_status("Adding notes for #{ref_name}")
       File.open(path, 'wb') do |f|
         f.write(notes)
       end
