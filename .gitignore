@@ -3,3 +3,5 @@
 doc/
 report/data.json
 .cache
+.blacklist
+.whitelist

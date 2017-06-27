@@ -1,6 +1,6 @@
 require 'eyediff/env'
-require 'eyediff/references'
-require 'eyediff/cache'
+require 'eyediff/cache/references'
+require 'eyediff/cache/cache'
 require 'eyediff/report'
 require 'eyediff/differ'
 require 'eyediff/thread_pool'

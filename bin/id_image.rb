@@ -44,7 +44,7 @@ class IdImage
       return
     end
 
-    @cache = EyeDiff::Cache.new
+    @cache = EyeDiff::Cache::Cache.new
 
     begin
       Helper::Output.print_status("Identifying image...")

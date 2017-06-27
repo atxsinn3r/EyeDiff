@@ -1,5 +1,5 @@
 require 'eyediff/env'
-require 'eyediff/references'
+require 'eyediff/cache/references'
 require 'json'
 require 'uri'
 require 'terminal-table'

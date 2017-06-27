@@ -18,7 +18,7 @@ class EyeDiffServer
 
   class Handlers
     def initialize
-      @cache = EyeDiff::Cache.new
+      @cache = EyeDiff::Cache::Cache.new
     end
 
     def identify(encoded_data)
@@ -63,8 +63,8 @@ class EyeDiffServer
         images << Helper::Converter.hash_key_strings_to_symbols(item)
       }
 
-      EyeDiff::References.add(name, images, notes)
-      image_names = EyeDiff::References.get_image_paths(name)
+      EyeDiff::Cache::References.add(name, images, notes)
+      image_names = EyeDiff::Cache::References.get_image_paths(name)
       @cache.add(name: name, paths: image_names)
 
       { message: 'OK' }
@@ -106,7 +106,17 @@ class EyeDiffServer
       nil
     end
 
+    def generate_results(name)
+      notes = EyeDiff::Cache::References.get_notes(name)
+      results = {}
+      results[:name] = name
+      results[:notes] = notes if notes
+      results
+    end
+
     def id_image(image)
+      results = {}
+
       if @cache.is_in_blacklist?(image)
         Helper::Output.print_status("Image in black list")
         return {}
@@ -114,14 +124,13 @@ class EyeDiffServer
 
       Helper::Output.print_status("Identifying image...")
 
-      name = md5_match(image) || pixel_match(image)
+      name = @cache.get_name_in_whitelist_by_data(image) || md5_match(image) || pixel_match(image)
+
       if name
         Helper::Output.print_status("Found a match: #{name}")
         @cache.increase_popularity(name)
-        notes = EyeDiff::References.get_notes(name)
-        results = {}
-        results[:name] = name
-        results[:notes] = notes if notes
+        @cache.add_to_whitelist(name, image)
+        results = generate_results(name)
         return results
       else
         @cache.add_to_blacklist(image)

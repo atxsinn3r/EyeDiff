@@ -13,6 +13,10 @@ module EyeDiff
       File.expand_path(File.join(base, '..', '.blacklist'))
     end
 
+    def self.whitelist_file_location
+      File.expand_path(File.join(base, '..', '.whitelist'))
+    end
+
     def self.report_image_location
       File.expand_path(File.join(base, '..', 'report', 'images'))
     end
