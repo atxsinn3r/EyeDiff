@@ -26,14 +26,6 @@ Note: EyeWitness can only be run on Kali as of now.
 * clear_local_report.sh - Clears the report.
 
 
-## Installation
-
-In your terminal, do:
-
-```
-$ bundle install
-```
-
 ## Wiki
 
-To learn about this tool, please visit the [wiki page](https://github.com/wchen-r7/EyeDiff/wiki).
+To learn about this tool, including installation and usage, please visit the [wiki page](https://github.com/wchen-r7/EyeDiff/wiki).
