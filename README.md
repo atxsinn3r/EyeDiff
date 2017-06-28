@@ -22,7 +22,8 @@ Note: EyeWitness can only be run on Kali as of now.
               You can also use this tool to add more references and notes.
 * server.rb - The server allows you to look up an image by using the client.rb tool.
 * id_image.rb - This allows you to look up an image from your own local database.
-* view_report.rb - This is the report interface for client.rb
+* view_report.sh - This is the report interface for client.rb
+* clear_local_report.sh - Clears the report.
 
 
 ## Installation
@@ -33,9 +34,6 @@ In your terminal, do:
 $ bundle install
 ```
 
-## Typical Usage
+## Wiki
 
-1. Start the server
-2. Start view_report, this will spawn a browser to monitor the EyeDiff report
-3. Run client.rb (see --help for more information)
-4. Look at the image report.
+To learn about this tool, please visit the [wiki page](https://github.com/wchen-r7/EyeDiff/wiki).
