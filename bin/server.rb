@@ -145,7 +145,7 @@ class EyeDiffServer
   def self.run
     h = Handlers.new
     begin
-      server = XMLRPC::Server.new(PORT)
+      server = XMLRPC::Server.new(PORT, '0.0.0.0')
       server.add_handler(EyeDiffServer::HandlerNames::IDENTIFY) { |encoded_data| h.identify(encoded_data) }
       server.add_handler(EyeDiffServer::HandlerNames::ADDREF) { |*args| h.add_reference(args) }
       server.add_handler(EyeDiffServer::HandlerNames::EXCEPTION) { |md5| h.add_exception(md5) }
