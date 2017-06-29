@@ -30,12 +30,12 @@ module EyeDiff
     end
 
     def self.default_acceptable_pixel_difference
-      13
+      7.3
     end
 
     def self.default_acceptable_histogram_difference
       {
-        high: 110.0,
+        high: 100.0,
         low: 80.0
       }
     end

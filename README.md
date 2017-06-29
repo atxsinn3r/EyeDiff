@@ -11,11 +11,6 @@ Once the important targets have been identified, the pentesters can use shared n
 them engage these remote machines. Ideally, notes may allow these people to perform on a
 similar quality level, and hopefully more productive.
 
-If you don't know what EyeWitness is, see:
-https://github.com/ChrisTruncer/EyeWitness
-
-Note: EyeWitness can only be run on Kali as of now.
-
 ## The Tools
 
 * client.rb - This allows you to identify a single image, or multiple from a directory remotely.
